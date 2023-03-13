@@ -44,14 +44,15 @@ int main()
     string a, c;
     char b;
     ifstream f("exemplu2.in");
-    ///Citire stari initiale
+    ///Citire stare initiala
     int n = 0;
-    f >> n;
-    while(n){
+    f >> a;
+    si.push_back(a);
+    /*while(n){
         f >> a;
         si.push_back(a);
         n--;
-    }
+    }*/
     ///Citire stari finale
     f >> n;
     while(n){
