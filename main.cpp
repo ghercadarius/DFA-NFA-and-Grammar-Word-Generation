@@ -6,7 +6,7 @@ const int N = 1e5+10;
 map <string, vector<pair<char, string>>> m; /// pair - primul fct tranzitie, doi stare
 map <string, bool> sf;
 map <string, bool> st;
-vector <string> si;
+string si;
 vector <string> dr_fin;
 string getString(char x)
 {
@@ -45,15 +45,14 @@ int main()
     char b;
     ifstream f("exemplu2.in");
     ///Citire stare initiala
-    int n = 0;
-    f >> a;
-    si.push_back(a);
+    f >> si;
     /*while(n){
         f >> a;
         si.push_back(a);
         n--;
     }*/
     ///Citire stari finale
+    int n = 0;
     f >> n;
     while(n){
         f >> a;
@@ -72,7 +71,6 @@ int main()
     ///Citire cuvant
     string test;
     cin >> test;
-    for(auto i:  si)
-        cout << (parcurgere(test, i) != 0 ? "Acceptat" : "Neacceptat")<<"\n";
+    cout << (parcurgere(test, si) != 0 ? "Acceptat" : "Neacceptat")<<"\n";
     return 0;
 }
