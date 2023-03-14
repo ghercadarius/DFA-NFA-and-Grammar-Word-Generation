@@ -54,8 +54,10 @@ int main()
     ///exemplu_lambda_afn.in - test: abbaa
     ///exemplu2.in - test: abbabba
     ///date.in - test: 110101002
+    ///exemplu3.in - test: ababbab
+    ///exemplu4.in - test: 1001
     string a, b, c;
-    ifstream f("date.in");
+    ifstream f("exemplu4.in");
     ///Citire stare initiala
     f >> si;
     /*while(n){
