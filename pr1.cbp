@@ -34,11 +34,8 @@
 		</Compiler>
 		<Unit filename="date.in" />
 		<Unit filename="exemplu2.in" />
+		<Unit filename="exemplu_lambda_afn.in" />
 		<Unit filename="main.cpp" />
-		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

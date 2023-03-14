@@ -6,7 +6,7 @@
 using namespace std;
 
 const int N = 1e5+10;
-map <string, vector<pair<char, string>>> m; /// pair - primul fct tranzitie, doi stare
+map <string, vector<pair<string, string>>> m; /// pair - primul fct tranzitie, doi stare
 map <string, bool> sf;
 map <string, bool> st;
 string si;
@@ -32,9 +32,15 @@ bool parcurgere(string test,string stare){
     act.erase(act.begin());
     char fct = test[0];
     for(auto i: m[stare]){
-        if(i.first == fct){
-            dr_fin.push_back(getString(i.first));
+        if(i.first[0] == fct && i.first != "lambda"){
+            dr_fin.push_back(i.first);
             if(parcurgere(act, i.second))
+                return true;
+            dr_fin.pop_back();
+        }else
+        if(i.first == "lambda"){
+            dr_fin.push_back(i.first);
+            if(parcurgere(test, i.second))
                 return true;
             dr_fin.pop_back();
         }
@@ -44,9 +50,12 @@ bool parcurgere(string test,string stare){
 }
 int main()
 {
-    string a, c;
-    char b;
-    ifstream f("exemplu2.in");
+
+    ///exemplu_lambda_afn.in - test: abbaa
+    ///exemplu2.in - test: abbabba
+    ///date.in - test: 110101002
+    string a, b, c;
+    ifstream f("date.in");
     ///Citire stare initiala
     f >> si;
     /*while(n){
@@ -65,7 +74,7 @@ int main()
     ///Citire tranzitii
     while(f >> a >> b >> c){
         if(!st[a]){
-            m.insert({a, vector<pair<char, string>>()});
+            m.insert({a, vector<pair<string, string>>()});
             st[a] = true;
         }
         m[a].push_back({b, c});
