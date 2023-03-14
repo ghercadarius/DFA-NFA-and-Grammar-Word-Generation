@@ -11,6 +11,7 @@ map <string, bool> sf;
 map <string, bool> st;
 string si;
 vector <string> dr_fin;
+bool rez = false;
 string getString(char x)
 {
     string s(1, x);
@@ -18,6 +19,10 @@ string getString(char x)
 }
 bool parcurgere(string test,string stare){
     dr_fin.push_back(stare);
+    /*for(auto i:dr_fin){
+        cout<<i<<" ";
+    }
+    cout<<"\n";*/
     if(test == ""){
         if(sf[stare]){
             for(auto i:dr_fin){
@@ -25,9 +30,9 @@ bool parcurgere(string test,string stare){
             }
             cout<<"\n";
         }
+        dr_fin.pop_back();
         return sf[stare];
     }
-    bool rez = false;
     string act = test;
     act.erase(act.begin());
     char fct = test[0];
@@ -35,18 +40,17 @@ bool parcurgere(string test,string stare){
         if(i.first[0] == fct && i.first != "lambda"){
             dr_fin.push_back(i.first);
             if(parcurgere(act, i.second))
-                return true;
+                rez = true;
             dr_fin.pop_back();
         }else
         if(i.first == "lambda"){
             dr_fin.push_back(i.first);
             if(parcurgere(test, i.second))
-                return true;
+                rez = true;
             dr_fin.pop_back();
         }
     }
     dr_fin.pop_back();
-    return false;
 }
 int main()
 {
@@ -57,7 +61,7 @@ int main()
     ///exemplu3.in - test: ababbab
     ///exemplu4.in - test: 1001
     string a, b, c;
-    ifstream f("exemplu4.in");
+    ifstream f("exemplu3.in");
     ///Citire stare initiala
     f >> si;
     /*while(n){
@@ -85,6 +89,7 @@ int main()
     ///Citire cuvant
     string test;
     cin >> test;
-    cout << (parcurgere(test, si) != 0 ? "Acceptat" : "Neacceptat")<<"\n";
+    parcurgere(test, si);
+    cout << (rez != 0 ? "Acceptat" : "Neacceptat")<<"\n";
     return 0;
 }

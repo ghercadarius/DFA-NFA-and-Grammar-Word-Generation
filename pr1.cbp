@@ -34,6 +34,8 @@
 		</Compiler>
 		<Unit filename="date.in" />
 		<Unit filename="exemplu2.in" />
+		<Unit filename="exemplu3.in" />
+		<Unit filename="exemplu4.in" />
 		<Unit filename="exemplu_lambda_afn.in" />
 		<Unit filename="main.cpp" />
 		<Extensions />
