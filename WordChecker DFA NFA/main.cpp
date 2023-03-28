@@ -9,6 +9,7 @@ const int N = 1e5+10;
 map <string, vector<pair<string, string>>> m; /// pair - primul fct tranzitie, doi stare
 map <string, bool> sf;
 map <string, bool> st;
+map <pair<string, string>, bool> marcat;
 string si;
 vector <string> dr_fin;
 bool rez = false;
@@ -17,7 +18,10 @@ string getString(char x)
     string s(1, x);
     return s;
 }
-bool parcurgere(string test,string stare){
+bool parcurgere(string test,string stare, map <pair<string, string>, bool> marcat){
+    if(marcat[{test, stare}])
+        return false;
+    marcat[{test, stare}] = true;
     dr_fin.push_back(stare);
     /*for(auto i:dr_fin){
         cout<<i<<" ";
@@ -39,13 +43,13 @@ bool parcurgere(string test,string stare){
     for(auto i: m[stare]){
         if(i.first[0] == fct && i.first != "lambda"){
             dr_fin.push_back(i.first);
-            if(parcurgere(act, i.second))
+            if(parcurgere(act, i.second, marcat))
                 rez = true;
             dr_fin.pop_back();
         }else
         if(i.first == "lambda"){
             dr_fin.push_back(i.first);
-            if(parcurgere(test, i.second))
+            if(parcurgere(test, i.second, marcat))
                 rez = true;
             dr_fin.pop_back();
         }
@@ -60,8 +64,9 @@ int main()
     ///date.in - test: 110101002
     ///exemplu3.in - test: ababbab
     ///exemplu4.in - test: 1001
+    ///exemplu5.in - test: 00
     string a, b, c;
-    ifstream f("exemplu3.in");
+    ifstream f("exemplu5.in");
     ///Citire stare initiala
     f >> si;
     /*while(n){
@@ -89,7 +94,7 @@ int main()
     ///Citire cuvant
     string test;
     cin >> test;
-    parcurgere(test, si);
+    parcurgere(test, si, marcat);
     cout << (rez != 0 ? "Acceptat" : "Neacceptat")<<"\n";
     return 0;
 }
