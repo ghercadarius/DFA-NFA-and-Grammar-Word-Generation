@@ -43,8 +43,9 @@ int main()
     ///date.in
     ///exemplu3.in
     ///exemplu4.in
+    ///exemplu5.in -- afn
     string a, b, c;
-    ifstream f("exemplu_lambda_afn.in");
+    ifstream f("exemplu5.in");
     ///Citire stare initiala
     f >> si;
     /*while(n){
