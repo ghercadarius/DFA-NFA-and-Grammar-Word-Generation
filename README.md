@@ -1,0 +1,2 @@
+# lfa-laborator
+Teme lfa
