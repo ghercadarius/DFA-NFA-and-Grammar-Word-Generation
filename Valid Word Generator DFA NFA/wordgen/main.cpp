@@ -14,6 +14,7 @@ string si;
 int nr_lit; ///numarul de litere din cuvintele generate
 vector <string> dr_fin;
 bool afis = false;
+ofstream g;
 string getString(char x)
 {
     string s(1, x);
@@ -27,7 +28,7 @@ void parcurgere(string cuvant, string stare, map<pair<string, string>, bool> &ma
     if(cuvant.length() == nr_lit){
         if(stare == si){
             afis = true;
-            cout<<cuvant<<"\n";
+            g<<cuvant<<"\n";
         }
         for(auto i: m[stare])
             if(i.first == "lambda"){
@@ -54,8 +55,9 @@ int main()
     ///exemplu4.in
     ///exemplu5.in -- afn
     ///exemplu6.in -- ultimul exemplu din word
+    ///input.txt
     string a, b, c;
-    ifstream f("exemplu6.in");
+    ifstream f("input.txt");
     ///Citire stare initiala
     f >> si;
     /*while(n){
@@ -80,11 +82,15 @@ int main()
         m[c].push_back({b, a}); ///adaugam muchiile invers pentru a genera eficient cuvintele
     }
     f.close();
-    cin>>nr_lit; ///citire numarul de litere necesare
+    f.open("word.txt");
+    f>>nr_lit; ///citire numarul de litere necesare
+    f.close();
+    g.open("output.txt");
     ///Parcurgere generare cuvant
     for(auto i: sf)
         parcurgere("", i, rez);
     if(!afis)
-        cout<<"Nu sunt cuvinte valide pentru acest automat!";
+        g<<"Nu sunt cuvinte valide pentru acest automat!";
+    g.close();
     return 0;
 }
