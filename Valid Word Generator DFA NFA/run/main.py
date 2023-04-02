@@ -7,6 +7,7 @@ mon_prin = []
 dmcolor = "#D1F2EB"
 dtcolor = "#EAFAF1"
 dfont = ("Arial", 16)
+
 def choose_monitor():
     monitors = []
     #save primary monitor index in monitors list
@@ -28,17 +29,21 @@ def choose_monitor():
     primary_monitor = monitors[primary_mon]
     win = Tk()
     win.configure(bg = dmcolor)
-    Label(win, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM)
+    Label(win, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = 10, pady = 10)
     #adjust choosing window to primary monitor (primary monitor set in windows)
     win.geometry(f"{int( primary_monitor[2] ) // 3}x{int( primary_monitor[3] ) // 4}")
     win.geometry(f"+{int( primary_monitor[2]) // 2}+{int( primary_monitor[3] ) // 2}")
     winw = int ( primary_monitor[2] ) // 4
     winh = int ( primary_monitor[3] ) // 4
-    Label(win, text = "Write the monitor number you want to use", font = dfont, bg = dtcolor).pack()
+    def exit():
+        win.destroy()
+        quit()
+    Button(win , text="Exit" , bg="#FE736F" , font=dfont , command = exit).place( x=10 , y=10 )
+    Label(win, text = "Write the monitor number you want to use", font = dfont, bg = dtcolor).pack(side = TOP, padx = 10, pady = 10)
     #text_choose = Label(win, text = "Write the monitor number you want to use")
     #text_choose.pack()
     mon_num = Text(win, width = int( 0.1 * winw ), height = int( 0.02 * winh ), font = dfont, bg = dtcolor)
-    mon_num.pack()
+    mon_num.pack(padx = 10, pady = 10)
     x = 1
     #displaying on each monitor it's coresponding number
     for m in monitors:
@@ -62,12 +67,27 @@ def choose_monitor():
     monbut.pack()
     win.mainloop()
 
+def wordcheck():
+
+    return
+
+def wordgen():
+    return
+
 choose_monitor()
 window = Tk()
 window.configure(bg = dmcolor)
 window.title("LFA Projects Made by Gherca Darius")
-window.geometry(f"{mon_prin[2]}x{mon_prin[3]}")
+window.geometry(f"{int(0.8 * int( mon_prin[2] ))}x{int(0.8 * int ( mon_prin[3] ))}")
 window.geometry(f"+{mon_prin[0]}+{mon_prin[1]}")
-Label(window, text = "Choose desired project", font = dfont, bg = dtcolor).pack(side = TOP)
-
+def exit():
+    window.destroy()
+    quit()
+Button( window , text="Exit" , bg="#FE736F" , font=dfont , command = exit ).place( x=10 , y=10 )
+winw = int( mon_prin[2] )
+winh = int( mon_prin[3] )
+Label(window, text = "Choose desired project", font = dfont, bg = dtcolor).pack(side = TOP, padx = int(0.05 * winw), pady = int(0.05 * winh))
+Button(window, text = "Word Checker", font = dfont, bg = dtcolor, command = wordcheck).pack(side = TOP, padx = 10, pady = 30)
+Button(window, text = "Valid Word Generator", font = dfont, bg = dtcolor, command = wordgen).pack(side = TOP, padx = 10, pady = 15)
+Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = int(0.05 * winw), pady = int(0.05 * winh))
 window.mainloop()
