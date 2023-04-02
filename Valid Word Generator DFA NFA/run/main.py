@@ -67,12 +67,45 @@ def choose_monitor():
     monbut.pack()
     win.mainloop()
 
+def draw_main():
+    global window
+    global winw
+    global winh
+    for wid in window.slaves():
+        wid.forget()
+    def exit():
+        window.destroy()
+        quit()
+    Button( window , text="Exit" , bg="#FE736F" , font=dfont , command = exit ).place( x=10 , y=10 )
+    Label(window, text = "Choose desired project", font = dfont, bg = dtcolor).pack(side = TOP, padx = int(0.05 * winw), pady = int(0.05 * winh))
+    Button(window, text = "Word Checker", font = dfont, bg = dtcolor, command = wordcheck).pack(side = TOP, padx = 10, pady = 30)
+    Button(window, text = "Valid Word Generator", font = dfont, bg = dtcolor, command = wordgen).pack(side = TOP, padx = 10, pady = 15)
+    Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = int(0.05 * winw), pady = int(0.05 * winh))
 def wordcheck():
-
-    return
+    global window
+    global winw
+    global winh
+    print(winw, winh)
+    for wid in window.slaves():
+        wid.forget()
+    Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = int(0.05 * winw), pady = int(0.05 * winh))
+    def exit():
+        return draw_main()
+    Button(window, text = "Back", font = dfont, bg = dtcolor, command = exit).pack(side = BOTTOM, padx = 5, pady = 5)
+    Label(text = "Stare initiala", font = dfont, bg = dtcolor).pack(side = LEFT, padx = 5, pady = 5)
+    stareinit = Text(window, font = dfont, bg = dtcolor, width = int(0.01 * winw), height = int(0.01 * winh))#, width = int (0.4 * winw), height = int(0.4 * winh))
+    stareinit.pack(side = LEFT, padx = 10, pady = 10)
+    Label(text = "Stari finale", font = dfont, bg = dtcolor).pack(side = LEFT, padx = 5, pady = 5)
+    starfin = Text(window, font = dfont, bg = dtcolor, width = int(0.01 * winw), height = int(0.01 * winh))
+    starfin.pack(side = LEFT, padx = 10, pady = 10)
+    Label(text = "Tranzitii sub forma: stare caracter stare ( exemplu: q1 a q2)", font = dfont, bg = dtcolor).pack(side = LEFT, padx = 5, pady = 5)
+    tranziti = Text(window, font = dfont, bg = dtcolor)
+    tranziti.pack(side = LEFT, padx = 10, pady = 10)
+    word = Text(window, font = dfont, bg = dtcolor, width = int(0.2 * winw))
+    word.pack(side = RIGHT, padx = 10, pady = 10)
 
 def wordgen():
-    return
+    global window
 
 choose_monitor()
 window = Tk()
@@ -80,14 +113,7 @@ window.configure(bg = dmcolor)
 window.title("LFA Projects Made by Gherca Darius")
 window.geometry(f"{int(0.8 * int( mon_prin[2] ))}x{int(0.8 * int ( mon_prin[3] ))}")
 window.geometry(f"+{mon_prin[0]}+{mon_prin[1]}")
-def exit():
-    window.destroy()
-    quit()
-Button( window , text="Exit" , bg="#FE736F" , font=dfont , command = exit ).place( x=10 , y=10 )
-winw = int( mon_prin[2] )
-winh = int( mon_prin[3] )
-Label(window, text = "Choose desired project", font = dfont, bg = dtcolor).pack(side = TOP, padx = int(0.05 * winw), pady = int(0.05 * winh))
-Button(window, text = "Word Checker", font = dfont, bg = dtcolor, command = wordcheck).pack(side = TOP, padx = 10, pady = 30)
-Button(window, text = "Valid Word Generator", font = dfont, bg = dtcolor, command = wordgen).pack(side = TOP, padx = 10, pady = 15)
-Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = int(0.05 * winw), pady = int(0.05 * winh))
+winw = int( mon_prin[ 2 ] )
+winh = int( mon_prin[ 3 ] )
+draw_main()
 window.mainloop()
