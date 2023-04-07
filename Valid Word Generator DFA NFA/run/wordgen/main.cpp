@@ -57,7 +57,7 @@ int main()
     ///exemplu6.in -- ultimul exemplu din word
     ///input.txt
     string a, b, c;
-    ifstream f("input.in");
+    ifstream f("input.txt");
     ///Citire stare initiala
     f >> si;
     /*while(n){
@@ -82,7 +82,7 @@ int main()
         m[c].push_back({b, a}); ///adaugam muchiile invers pentru a genera eficient cuvintele
     }
     f.close();
-    f.open("word.in");
+    f.open("word.txt");
     f>>nr_lit; ///citire numarul de litere necesare
     f.close();
     g.open("output.txt");

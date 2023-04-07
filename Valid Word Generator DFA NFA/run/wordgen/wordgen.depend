@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1680019056 source:c:\users\gherc\documents\github\lfa-laborator\valid word generator dfa nfa\wordgen\main.cpp
+	<iostream>
+	<map>
+	<vector>
+	<string>
+	<fstream>
+
+1680375986 source:c:\users\gherc\documents\github\lfa-laborator\valid word generator dfa nfa\run\wordgen\main.cpp
+	<iostream>
+	<map>
+	<vector>
+	<string>
+	<fstream>
+

@@ -1,4 +1,6 @@
 import os, win32api
+import subprocess
+import multiprocessing
 from tkinter import *
 from screeninfo import get_monitors
 
@@ -31,7 +33,7 @@ def choose_monitor():
     win.configure(bg = dmcolor)
     Label(win, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = 10, pady = 10)
     #adjust choosing window to primary monitor (primary monitor set in windows)
-    win.geometry(f"{int( primary_monitor[2] ) // 3}x{int( primary_monitor[3] ) // 4}")
+    win.geometry(f"{int (int( primary_monitor[2] ) / 2.5)}x{int (int( primary_monitor[3] ) / 2.5)}")
     win.geometry(f"+{int( primary_monitor[2]) // 2}+{int( primary_monitor[3] ) // 2}")
     winw = int ( primary_monitor[2] ) // 4
     winh = int ( primary_monitor[3] ) // 4
@@ -71,47 +73,193 @@ def draw_main():
     global window
     global winw
     global winh
-    for wid in window.slaves():
-        wid.forget()
+    for wid in window.grid_slaves():
+        wid.destroy()
     def exit():
         window.destroy()
         quit()
-    Button( window , text="Exit" , bg="#FE736F" , font=dfont , command = exit ).place( x=10 , y=10 )
-    Label(window, text = "Choose desired project", font = dfont, bg = dtcolor).pack(side = TOP, padx = int(0.05 * winw), pady = int(0.05 * winh))
-    Button(window, text = "Word Checker", font = dfont, bg = dtcolor, command = wordcheck).pack(side = TOP, padx = 10, pady = 30)
-    Button(window, text = "Valid Word Generator", font = dfont, bg = dtcolor, command = wordgen).pack(side = TOP, padx = 10, pady = 15)
-    Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = int(0.05 * winw), pady = int(0.05 * winh))
-def wordcheck():
+    Button( window , text="Exit" , bg="#FE736F" , font=dfont , command = exit ).grid(row = 0, column = 0)
+    Label(window, text = "Choose desired project", font = dfont, bg = dtcolor).grid(row = 1, column = 1)
+    Button(window, text = "Word Checker", font = dfont, bg = dtcolor, command = wordcheck).grid(row = 2, column = 1)
+    Button(window, text = "Valid Word Generator", font = dfont, bg = dtcolor, command = wordgen).grid(row = 3, column = 1)
+    Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).grid(row = 4, column = 0)
+def wordgen():
     global window
     global winw
     global winh
     print(winw, winh)
-    for wid in window.slaves():
-        wid.forget()
-    Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = int(0.05 * winw), pady = int(0.05 * winh))
-    def exit():
-        return draw_main()
-    Button(window, text = "Back", font = dfont, bg = dtcolor, command = exit).pack(side = BOTTOM, padx = 5, pady = 5)
-    Label(text = "Stare initiala", font = dfont, bg = dtcolor).pack(side = LEFT, padx = 5, pady = 5)
-    stareinit = Text(window, font = dfont, bg = dtcolor, width = int(0.01 * winw), height = int(0.01 * winh))#, width = int (0.4 * winw), height = int(0.4 * winh))
-    stareinit.pack(side = LEFT, padx = 10, pady = 10)
-    Label(text = "Stari finale", font = dfont, bg = dtcolor).pack(side = LEFT, padx = 5, pady = 5)
-    starfin = Text(window, font = dfont, bg = dtcolor, width = int(0.01 * winw), height = int(0.01 * winh))
-    starfin.pack(side = LEFT, padx = 10, pady = 10)
-    Label(text = "Tranzitii sub forma: stare caracter stare ( exemplu: q1 a q2)", font = dfont, bg = dtcolor).pack(side = LEFT, padx = 5, pady = 5)
-    tranziti = Text(window, font = dfont, bg = dtcolor)
-    tranziti.pack(side = LEFT, padx = 10, pady = 10)
-    word = Text(window, font = dfont, bg = dtcolor, width = int(0.2 * winw))
-    word.pack(side = RIGHT, padx = 10, pady = 10)
 
-def wordgen():
+    for wid in window.slaves():
+        wid.destroy()
+    #Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = int(0.05 * winw), pady = int(0.05 * winh))
+    Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).grid(row = 5, column = 0)
+    def exit():
+        window.destroy()
+        quit()
+    Button( window , text="Exit" , bg="#FE736F" , font=dfont , command = exit ).grid(row = 0, column = 0)
+    def wexit():
+        return draw_main()
+    Button(window, text = "Back", font = dfont, bg = dtcolor, command = wexit).grid(row = 5, column = 2)
+    Label(window, text = "Word Generator", font = dfont, bg = dtcolor).grid(row = 0, column = 1)
+    Label(text = "Initial State", font = dfont, bg = dtcolor).grid(row = 1, column = 0)
+    stareinit = Text(window, font = dfont, bg = dtcolor, width = int(0.01 * winw), height = int(0.01 * winh))#, width = int (0.4 * winw), height = int(0.4 * winh))
+    stareinit.grid(row = 2, column = 0)
+    Label(text = "Final States", font = dfont, bg = dtcolor).grid(row = 3, column = 0)
+    starfin = Text(window, font = dfont, bg = dtcolor, width = int(0.01 * winw), height = int(0.01 * winh))
+    starfin.grid(row = 4, column = 0)
+    Label(text = "Transitions( example: q1 a q2)", font = dfont, bg = dtcolor).grid(row = 1, column = 1)
+    tranziti = Text(window, font = dfont, bg = dtcolor)
+    tranziti.grid(row = 2, column = 1, rowspan = 2)
+    def bwrite():
+        os.chdir("..")
+        os.chdir( 'wordgen/bin/Debug' )
+        #finput = '.\wordgen' + chr(92) + 'bin\Debug\input.txt'
+        with open("input.in", "w") as f:
+            sint = stareinit.get( "1.0" , 'end-1c' )
+            f.write(sint + "\n")
+            sfin = starfin.get("1.0", 'end-1c')
+            sfin = [x for x in sfin.split()]
+            f.write(str( len(sfin) ) + "\n")
+            for el in sfin:
+                f.write(el + "\n")
+            trans = tranziti.get("1.0", 'end-1c')
+            print("@\n" + trans)
+            f.write(trans)
+            f.close()
+        os.chdir( '..' )
+        os.chdir( '..' )
+        os.chdir( '..' )
+        return
+    Button(window, text = "Write", font = dfont, bg = dtcolor, command = bwrite).grid(row = 4, column = 1)
+    def wgen():
+        os.chdir( 'wordgen/bin/Debug' )
+        #fcuv = '.\wordgen' + chr(92) + 'bin\Debug\word.txt'
+        with open("word.in", 'w') as f:
+            scuv = word.get("1.0", 'end-1c')
+            f.write(scuv)
+            f.close()
+        #exec_pt = '.\wordgen'+ chr(92) + 'bin\Debug\wordgen.exe'
+        with open("input.in", "r") as g:
+            for linie in g.readlines():
+                print(linie)
+            g.close()
+        with open("output.txt", "w") as g:
+            g.write("")
+            g.close()
+        #subprocess.run(["./wordgen/bin/Debug/wordgen.exe", ""])
+        print(os.getcwd())
+        os.system("wordgen.exe")
+        print(os.getcwd())
+        #gcuv = '.\wordgen' + chr(92) + 'bin\Debug\output.txt'
+        while word.get("1.0", 'end-1c'):
+            word.delete(1.0)
+        with open("output.txt", "r") as g:
+            for linie in g:
+                word.insert(END, linie)
+            g.close()
+        os.chdir( '..' )
+        os.chdir( '..' )
+        os.chdir( '..' )
+        print(os.getcwd())
+        return
+    Button(window, text = "Generate words", font = dfont, bg = dtcolor, command = wgen).grid(row = 1, column = 2)
+    word = Text(window, font = dfont, bg = dtcolor, width = int(0.02 * winw), height = int(0.02 * winh))
+    word.grid(row = 2, column = 2, rowspan = 2)
+    Label(window, text = "Write in the text box the required length of the \n words generated, and then press generate words", font = dfont, bg = dtcolor).grid(row = 4, column = 2)
+
+def wordcheck():
     global window
+    global winw
+    global winh
+    print( winw , winh )
+    for wid in window.slaves( ) :
+        wid.destroy( )
+    # Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = int(0.05 * winw), pady = int(0.05 * winh))
+    Label( window , text="Made by Gherca Darius" , font=dfont , bg=dtcolor ).grid( row=5 , column=0 )
+    def exit() :
+        window.destroy( )
+        quit( )
+    Button( window , text="Exit" , bg="#FE736F" , font=dfont , command=exit ).grid( row=0 , column=0 )
+    def wexit() :
+        return draw_main( )
+    Button( window , text="Back" , font=dfont , bg=dtcolor , command=wexit ).grid( row=5 , column=2 )
+    Label( window , text="Word Checker" , font=dfont , bg=dtcolor ).grid( row=0 , column=1 )
+    Label( window, text = "Initial State" , font=dfont , bg=dtcolor ).grid( row=1 , column=0 )
+    stareinit = Text( window , font=dfont , bg=dtcolor , width=int( 0.01 * winw ) , height=int( 0.01 * winh ) )  # , width = int (0.4 * winw), height = int(0.4 * winh))
+    stareinit.grid( row=2 , column=0 )
+    Label( text="Final states" , font=dfont , bg=dtcolor ).grid( row=3 , column=0 )
+    starfin = Text( window , font=dfont , bg=dtcolor , width=int( 0.01 * winw ) , height=int( 0.01 * winh ) )
+    starfin.grid( row=4 , column=0 )
+    Label( text="Transitions( example: q1 a q2)" , font=dfont , bg=dtcolor ).grid( row=1 , column=1 )
+    tranziti = Text( window , font=dfont , bg=dtcolor )
+    tranziti.grid( row=2 , column=1 , rowspan=2 )
+
+    def bwrite() :
+        os.chdir( ".." )
+        os.chdir( 'wordcheck/bin/Debug' )
+        # finput = '.\wordgen' + chr(92) + 'bin\Debug\input.txt'
+        with open( "input.in" , "w" ) as f :
+            sint = stareinit.get( "1.0" , 'end-1c' )
+            f.write( sint + "\n" )
+            sfin = starfin.get( "1.0" , 'end-1c' )
+            sfin = [ x for x in sfin.split( ) ]
+            f.write( str( len( sfin ) ) + "\n" )
+            for el in sfin :
+                f.write( el + "\n" )
+            trans = tranziti.get( "1.0" , 'end-1c' )
+            print( "@\n" + trans )
+            f.write( trans )
+            f.close( )
+        os.chdir( '..' )
+        os.chdir( '..' )
+        os.chdir( '..' )
+        return
+
+    Button( window , text="Write" , font=dfont , bg=dtcolor , command=bwrite ).grid( row=4 , column=1 )
+
+    def wgen() :
+        os.chdir( 'wordcheck/bin/Debug' )
+        # fcuv = '.\wordgen' + chr(92) + 'bin\Debug\word.txt'
+        with open( "word.in" , 'w' ) as f :
+            scuv = word.get( "1.0" , 'end-1c' )
+            f.write( scuv )
+            f.close( )
+        # exec_pt = '.\wordgen'+ chr(92) + 'bin\Debug\wordgen.exe'
+        with open( "input.in" , "r" ) as g :
+            for linie in g.readlines( ) :
+                print( linie )
+            g.close( )
+        with open( "output.txt" , "w" ) as g :
+            g.write( "" )
+            g.close( )
+        # subprocess.run(["./wordgen/bin/Debug/wordgen.exe", ""])
+        print( os.getcwd( ) )
+        os.system( "wordcheck.exe" )
+        print( os.getcwd( ) )
+        # gcuv = '.\wordgen' + chr(92) + 'bin\Debug\output.txt'
+        while word.get( "1.0" , 'end-1c' ) :
+            word.delete( 1.0 )
+        with open( "output.txt" , "r" ) as g :
+            for linie in g :
+                word.insert( END , linie )
+            g.close( )
+        os.chdir( '..' )
+        os.chdir( '..' )
+        os.chdir( '..' )
+        print( os.getcwd( ) )
+        return
+
+    Button( window , text="Check" , font=dfont , bg=dtcolor , command=wgen ).grid( row=1 , column=2 )
+    word = Text( window , font=dfont , bg=dtcolor , width=int( 0.02 * winw ) , height=int( 0.02 * winh ) )
+    word.grid( row=2 , column=2 , rowspan=2 )
+    Label( window , text="Write in the text box the word to check" , font=dfont , bg=dtcolor ).grid( row=4 , column=2 )
+
 
 choose_monitor()
 window = Tk()
 window.configure(bg = dmcolor)
 window.title("LFA Projects Made by Gherca Darius")
-window.geometry(f"{int(0.8 * int( mon_prin[2] ))}x{int(0.8 * int ( mon_prin[3] ))}")
+window.geometry(f"{int(0.9 * int( mon_prin[2] ))}x{int(0.9 * int ( mon_prin[3] ))}")
 window.geometry(f"+{mon_prin[0]}+{mon_prin[1]}")
 winw = int( mon_prin[ 2 ] )
 winh = int( mon_prin[ 3 ] )
