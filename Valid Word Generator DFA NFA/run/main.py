@@ -73,6 +73,7 @@ def draw_main():
     global window
     global winw
     global winh
+    print( os.getcwd( ) + "@")
     for wid in window.grid_slaves():
         wid.destroy()
     def exit():
@@ -88,7 +89,6 @@ def wordgen():
     global winw
     global winh
     print(winw, winh)
-
     for wid in window.slaves():
         wid.destroy()
     #Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = int(0.05 * winw), pady = int(0.05 * winh))
@@ -111,7 +111,6 @@ def wordgen():
     tranziti = Text(window, font = dfont, bg = dtcolor)
     tranziti.grid(row = 2, column = 1, rowspan = 2)
     def bwrite():
-        os.chdir("..")
         os.chdir( 'wordgen/bin/Debug' )
         #finput = '.\wordgen' + chr(92) + 'bin\Debug\input.txt'
         with open("input.in", "w") as f:
@@ -255,6 +254,7 @@ def wordcheck():
     Label( window , text="Write in the text box the word to check" , font=dfont , bg=dtcolor ).grid( row=4 , column=2 )
 
 
+os.chdir( ".." )
 choose_monitor()
 window = Tk()
 window.configure(bg = dmcolor)
