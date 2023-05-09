@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1683657018 source:d:\facultate\sem2\lfa\pe3\pr3\main.cpp
+	<iostream>
+	<fstream>
+	<vector>
+	<string>
+	<unordered_map>
+
+1683659073 source:c:\users\gherc\documents\github\lfa-laborator\word generator grammar\wordgen_gram\main.cpp
+	<iostream>
+	<fstream>
+	<vector>
+	<string>
+	<unordered_map>
+

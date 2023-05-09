@@ -93,6 +93,8 @@ def wordgram():
     print(winw, winh)
     for wid in window.slaves():
         wid.destroy()
+    for wid in window.grid_slaves():
+        wid.destroy()
     #Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = int(0.05 * winw), pady = int(0.05 * winh))
     Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).grid(row = 5, column = 0)
     def exit():
@@ -102,7 +104,7 @@ def wordgram():
     def wexit():
         return draw_main()
     Button(window, text = "Back", font = dfont, bg = dtcolor, command = wexit).grid(row = 3, column = 2)
-    Label(window, text = "Grammar Word Generator", font = dfont, bg = dtcolor).grid(row = 0, column = 1)
+    Label(window, text = "Grammar Word Generator", font = dfont, bg = dtcolor).grid(row = 0, column = 2)
     Label(text = "Grammar: (Example: S -> aA | dE)", font = dfont, bg = dtcolor).grid(row = 1, column = 1)
     tranziti = Text(window, font = dfont, bg = dtcolor)
     tranziti.grid(row = 2, column = 1, rowspan = 2)
@@ -136,7 +138,7 @@ def wordgram():
             g.close()
         #subprocess.run(["./wordgen/bin/Debug/wordgen.exe", ""])
         print(os.getcwd())
-        os.system("wordgen.exe")
+        os.system("pr3.exe")
         print(os.getcwd())
         #gcuv = '.\wordgen' + chr(92) + 'bin\Debug\output.txt'
         while word.get("1.0", 'end-1c'):
@@ -161,6 +163,8 @@ def wordgen():
     global winh
     print(winw, winh)
     for wid in window.slaves():
+        wid.destroy()
+    for wid in window.grid_slaves():
         wid.destroy()
     #Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = int(0.05 * winw), pady = int(0.05 * winh))
     Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).grid(row = 5, column = 0)
@@ -244,6 +248,8 @@ def wordcheck():
     print( winw , winh )
     for wid in window.slaves( ) :
         wid.destroy( )
+    for wid in window.grid_slaves():
+        wid.destroy()
     # Label(window, text = "Made by Gherca Darius", font = dfont, bg = dtcolor).pack(side = BOTTOM, padx = int(0.05 * winw), pady = int(0.05 * winh))
     Label( window , text="Made by Gherca Darius" , font=dfont , bg=dtcolor ).grid( row=5 , column=0 )
     def exit() :

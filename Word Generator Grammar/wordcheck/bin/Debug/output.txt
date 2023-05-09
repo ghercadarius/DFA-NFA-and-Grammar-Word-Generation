@@ -1,0 +1,2 @@
+q0 a q1 b q3 a q4 b q1 b q3 a q4 b q1 
+Acceptat

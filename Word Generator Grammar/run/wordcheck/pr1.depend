@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1678639052 source:d:\facultate\sem2\lfa\proiect1\pr1\main.cpp
+	<bits/stdc++.h>
+
+1678813073 source:c:\users\gherc\documents\github\lfa-laborator\main.cpp
+	<iostream>
+	<map>
+	<vector>
+	<string>
+	<fstream>
+
+1680016502 source:c:\users\gherc\documents\github\lfa-laborator\wordchecker dfa nfa\main.cpp
+	<iostream>
+	<map>
+	<vector>
+	<string>
+	<fstream>
+
